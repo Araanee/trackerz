@@ -1,0 +1,71 @@
+# Resell Buisness Management System
+
+A web application for managing a resell business.
+
+## Features
+
+- Client Management
+- Order Tracking
+- Inventory Management
+- Product Catalog
+- Financial Dashboard
+- Multi-device Access
+- Real-time Updates
+
+
+## Tech Stack
+
+- Frontend: React
+- Backend: Java Spring Boot
+- Database: PostgreSQL
+- API Documentation: Swagger/OpenAPI
+- Authentication: JWT
+- Testing: JUnit, React Testing Library
+
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js (v14 or above)
+- Java JDK 17 or above
+- Maven
+- PostgreSQL
+- Git
+
+### Installation
+
+1. Clone the repository
+2. Install dependencies
+3. Configure database
+4. Start the development servers
+
+### Frontend
+
+cd client
+npm install
+npm start
+
+### Backend
+
+cd server
+mvn clean install
+mvn spring-boot:run
+
+## Project Structure
+
+trackerz/
+├── client/ # React frontend
+│ ├── src/
+│ │ ├── components/ # Reusable components
+│ │ ├── pages/ # Page components
+│ │ ├── services/ # API services
+│ │ └── utils/ # Helper functions
+├── server/ # Spring Boot backend
+│ ├── src/
+│ │ ├── main/
+│ │ │ ├── java/ # Java source files
+│ │ │ └── resources/ # Configuration files
+│ │ └── test/ # Test files
+├── README.md
+└── .gitignore
