@@ -24,7 +24,7 @@ public class ClientService {
 
     // Create new client
     public Client createClient(Client client) {
-        // add validation
+        //TODO: add validation
         return clientRepository.save(client);
     }
 
@@ -48,10 +48,12 @@ public class ClientService {
     public Client updateClient(Long id, Client updatedClient) {
         Client existingClient = getClient(id);
         existingClient.setName(updatedClient.getName());
+        existingClient.setCity(updatedClient.getCity());
         existingClient.setPhoneNumber(updatedClient.getPhoneNumber());
         return clientRepository.save(existingClient);
     }
 
+    // Delete a client
     public void deleteClient(Long id) {
         if (!clientRepository.existsById(id)) {
             throw new EntityNotFoundException("Client not found with id: " + id);

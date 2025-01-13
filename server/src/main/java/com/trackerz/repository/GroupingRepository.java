@@ -15,4 +15,7 @@ public interface GroupingRepository extends JpaRepository<Grouping, Long> {
 
     // Find groupings between two dates
     List<Grouping> findByDateBetween(LocalDateTime start, LocalDateTime end);
+    
+    // Add this method
+    List<Grouping> findByNameContainingIgnoreCase(String name);
 } 

@@ -21,4 +21,7 @@ public interface OrderProductRepository extends JpaRepository<OrderProduct, Long
     
     // Find <status> products of an order
     List<OrderProduct> findByOrderAndStatus(Order order, OrderStatus status);
+    
+    // Find orderproducts by product name
+    List<OrderProduct> findByProduct_NameContainingIgnoreCase(String productName);
 } 
