@@ -20,6 +20,7 @@ public class ClientController {
     }
 
     // Get all clients
+    @GetMapping("/all")
     public List<Client> getAllClients() {
         return clientService.getAllClients();
     }
