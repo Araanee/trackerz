@@ -52,7 +52,6 @@ public class OrderProductService {
     // Update an order product
     public OrderProduct updateOrderProduct(Long id, OrderProduct updatedOrderProduct) {
         OrderProduct existingOrderProduct = getOrderProduct(id);
-        existingOrderProduct.setOrder(updatedOrderProduct.getOrder());
         existingOrderProduct.setProduct(updatedOrderProduct.getProduct());
         existingOrderProduct.setQuantity(updatedOrderProduct.getQuantity());
         existingOrderProduct.setStatus(updatedOrderProduct.getStatus());

@@ -22,6 +22,6 @@ public class Order {
     @JoinColumn(name = "client_id", nullable = false)
     private Client client;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany
     private List<OrderProduct> orderProducts;
 }
