@@ -41,6 +41,10 @@ public class ProfitSharingService {
     // Update a profit sharing
     public ProfitSharing updateProfitSharing(Long id, ProfitSharing updatedProfitSharing) {
         ProfitSharing existingProfitSharing = getProfitSharing(id);
+        // check if the profit sharing exists
+        if (existingProfitSharing == null) {
+            throw new EntityNotFoundException("Profit sharing not found with id: " + id);
+        }
         existingProfitSharing.setTotal(updatedProfitSharing.getTotal());
         existingProfitSharing.setPerson1Share(updatedProfitSharing.getPerson1Share());
         existingProfitSharing.setPerson2Share(updatedProfitSharing.getPerson2Share());

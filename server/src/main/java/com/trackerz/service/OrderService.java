@@ -53,6 +53,10 @@ public class OrderService {
     // Update an order
     public Order updateOrder(Long id, Order updatedOrder) {
         Order existingOrder = getOrder(id);
+        // check if the order exists
+        if (existingOrder == null) {
+            throw new EntityNotFoundException("Order not found with id: " + id);
+        }
         existingOrder.setOrderDate(updatedOrder.getOrderDate());
         existingOrder.setTotalAmount(updatedOrder.getTotalAmount());
         existingOrder.setClient(updatedOrder.getClient());

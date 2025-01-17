@@ -52,6 +52,10 @@ public class OrderProductService {
     // Update an order product
     public OrderProduct updateOrderProduct(Long id, OrderProduct updatedOrderProduct) {
         OrderProduct existingOrderProduct = getOrderProduct(id);
+        // check if the order product exists
+        if (existingOrderProduct == null) {
+            throw new EntityNotFoundException("Order product not found with id: " + id);
+        }
         existingOrderProduct.setProduct(updatedOrderProduct.getProduct());
         existingOrderProduct.setQuantity(updatedOrderProduct.getQuantity());
         existingOrderProduct.setStatus(updatedOrderProduct.getStatus());

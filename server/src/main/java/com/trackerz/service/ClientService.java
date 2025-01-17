@@ -1,7 +1,5 @@
 package com.trackerz.service;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import jakarta.transaction.Transactional;
@@ -15,8 +13,6 @@ import java.util.List;
 @Transactional
 public class ClientService {
 
-    private static final Logger log = LoggerFactory.getLogger(ClientService.class);
-
     // Repository injection
     private final ClientRepository clientRepository;
 
@@ -28,11 +24,7 @@ public class ClientService {
 
     // Create new client
     public Client createClient(Client client) {
-        // TODO: add validation
-        log.info("Creating new client: {}", client.getName());
-        Client savedClient = clientRepository.save(client);
-        log.info("Successfully created client with ID: {}", savedClient.getId());
-        return savedClient;
+        return clientRepository.save(client);
     }
 
     // Get client by id
@@ -54,6 +46,10 @@ public class ClientService {
     // Update client
     public Client updateClient(Long id, Client updatedClient) {
         Client existingClient = getClient(id);
+        // check if the client exists
+        if (existingClient == null) {
+            throw new EntityNotFoundException("Client not found with id: " + id);
+        }
         existingClient.setName(updatedClient.getName());
         existingClient.setCity(updatedClient.getCity());
         existingClient.setPhoneNumber(updatedClient.getPhoneNumber());
