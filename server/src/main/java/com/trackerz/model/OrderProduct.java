@@ -2,6 +2,7 @@ package com.trackerz.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.Data;
 import java.time.LocalDateTime;
 
@@ -17,9 +18,9 @@ public class OrderProduct {
     @ManyToOne
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
-    
+
     @NotNull(message = "La quantité est obligatoire")
-    @Column(nullable = false)
+    @Positive(message = "La quantité doit être positive")
     private Integer quantity;
 
     @NotNull(message = "Le statut est obligatoire")

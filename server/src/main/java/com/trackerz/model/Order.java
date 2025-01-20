@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Entity
@@ -19,7 +19,7 @@ public class Order {
 
     private Double totalAmount;
 
-    @NotBlank(message = "Le client est obligatoire")
+    @NotNull(message = "Le client est obligatoire")
     @ManyToOne
     @JoinColumn(name = "client_id", nullable = false)
     private Client client;
