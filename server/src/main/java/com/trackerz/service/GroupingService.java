@@ -45,10 +45,6 @@ public class GroupingService {
     // Update a grouping
     public Grouping updateGrouping(Long id, Grouping updatedGrouping) {
         Grouping existingGrouping = getGrouping(id);
-        // check if the grouping exists
-        if (existingGrouping == null) {
-            throw new EntityNotFoundException("Grouping not found with id: " + id);
-        }
         existingGrouping.setName(updatedGrouping.getName());
         existingGrouping.setDate(updatedGrouping.getDate());
         existingGrouping.setTotal(updatedGrouping.getTotal());

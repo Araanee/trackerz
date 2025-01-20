@@ -1,6 +1,7 @@
 package com.trackerz.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import java.time.LocalDateTime;
 
@@ -12,13 +13,16 @@ public class OrderProduct {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @NotNull(message = "Le produit est obligatoire")
     @ManyToOne
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
     
+    @NotNull(message = "La quantité est obligatoire")
     @Column(nullable = false)
     private Integer quantity;
 
+    @NotNull(message = "Le statut est obligatoire")
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
 

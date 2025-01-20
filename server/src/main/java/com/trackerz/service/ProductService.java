@@ -46,10 +46,6 @@ public class ProductService {
     // Update a product
     public Product updateProduct(Long id, Product updatedProduct) {
         Product existingProduct = getProduct(id);
-        // check if the product exists
-        if (existingProduct == null) {
-            throw new EntityNotFoundException("Product not found with id: " + id);
-        }
         existingProduct.setName(updatedProduct.getName());
         existingProduct.setPrice(updatedProduct.getPrice());
         return productRepository.save(existingProduct);

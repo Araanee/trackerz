@@ -46,10 +46,6 @@ public class ClientService {
     // Update client
     public Client updateClient(Long id, Client updatedClient) {
         Client existingClient = getClient(id);
-        // check if the client exists
-        if (existingClient == null) {
-            throw new EntityNotFoundException("Client not found with id: " + id);
-        }
         existingClient.setName(updatedClient.getName());
         existingClient.setCity(updatedClient.getCity());
         existingClient.setPhoneNumber(updatedClient.getPhoneNumber());

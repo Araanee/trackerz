@@ -1,6 +1,7 @@
 package com.trackerz.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -14,6 +15,8 @@ public class Grouping {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @NotBlank(message = "Le nom est obligatoire")
+    @Size(min = 3, max = 100, message = "Le nom du groupement doit contenir entre 3 et 100 caractères")
     @Column(nullable = false)
     private String name;
 
@@ -28,10 +31,11 @@ public class Grouping {
     private ProfitSharing profitSharing;
     
     @Column(nullable = false)
-    private Double nb_orders;
+    private Integer nb_orders;
 
     @OneToMany
     private List<Order> orders;
 
+    @NotNull(message = "Le statut est obligatoire")
     private GroupingStatus status;
 }

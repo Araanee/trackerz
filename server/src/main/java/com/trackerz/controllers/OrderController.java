@@ -1,10 +1,13 @@
 package com.trackerz.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.trackerz.service.OrderService;
 import com.trackerz.model.Order;
 import java.util.List;
+import jakarta.validation.Valid;
 import java.time.LocalDateTime;
 
 @RestController
@@ -22,44 +25,51 @@ public class OrderController {
 
     // Get all orders
     @GetMapping
-    public List<Order> getAllOrders() {
-        return orderService.getAllOrders();
+    public ResponseEntity<List<Order>> getAllOrders() {
+        List<Order> orders = orderService.getAllOrders();
+        return ResponseEntity.status(HttpStatus.OK).body(orders);
     }
 
     // Get an order by id
     @GetMapping("/{id}")
-    public Order getOrder(@PathVariable Long id) {
-        return orderService.getOrder(id);
+    public ResponseEntity<Order> getOrder(@PathVariable Long id) {
+        Order order = orderService.getOrder(id);
+        return ResponseEntity.status(HttpStatus.OK).body(order);
     }
 
     // Get orders between two dates
     @GetMapping("/between/{startDate}/{endDate}")
-    public List<Order> getOrdersByDateBetween(@PathVariable LocalDateTime startDate, @PathVariable LocalDateTime endDate) {
-        return orderService.getOrdersByDateBetween(startDate, endDate);
+    public ResponseEntity<List<Order>> getOrdersByDateBetween(@PathVariable LocalDateTime startDate, @PathVariable LocalDateTime endDate) {
+        List<Order> orders = orderService.getOrdersByDateBetween(startDate, endDate);
+        return ResponseEntity.status(HttpStatus.OK).body(orders);
     }
 
     // Get orders by total amount
     @GetMapping("/totalAmount/{amount}")
-    public List<Order> getOrdersByTotalAmountGreaterThan(@PathVariable Double amount) {
-        return orderService.getOrdersByTotalAmountGreaterThan(amount);
+    public ResponseEntity<List<Order>> getOrdersByTotalAmountGreaterThan(@PathVariable Double amount) {
+        List<Order> orders = orderService.getOrdersByTotalAmountGreaterThan(amount);
+        return ResponseEntity.status(HttpStatus.OK).body(orders);
     }
 
     // Create an order
     @PostMapping("/create")
-    public Order createOrder(@RequestBody Order order) {
-        return orderService.createOrder(order);
+    public ResponseEntity<Order> createOrder(@Valid @RequestBody Order order) {
+        Order createdOrder = orderService.createOrder(order);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdOrder);
     }
 
     // Update an order
     @PutMapping("/update/{id}")
-    public Order updateOrder(@PathVariable Long id, @RequestBody Order order) {
-        return orderService.updateOrder(id, order);
+    public ResponseEntity<Order> updateOrder(@PathVariable Long id, @Valid @RequestBody Order order) {
+        Order updatedOrder = orderService.updateOrder(id, order);
+        return ResponseEntity.status(HttpStatus.OK).body(updatedOrder);
     }
 
     // Delete an order
     @DeleteMapping("/delete/{id}")
-    public void deleteOrder(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteOrder(@PathVariable Long id) {
         orderService.deleteOrder(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
 }
