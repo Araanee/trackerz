@@ -7,8 +7,10 @@ import jakarta.transaction.Transactional;
 
 import com.trackerz.repository.OrderRepository;
 import com.trackerz.model.Order;
+import com.trackerz.model.OrderProduct;
 import com.trackerz.exception.EntityNotFoundException;
 import java.util.List;
+import java.util.ArrayList;
 import java.time.LocalDateTime;
 
 @Service
@@ -56,7 +58,6 @@ public class OrderService {
         existingOrder.setOrderDate(updatedOrder.getOrderDate());
         existingOrder.setTotalAmount(updatedOrder.getTotalAmount());
         existingOrder.setClient(updatedOrder.getClient());
-        existingOrder.setOrderProducts(updatedOrder.getOrderProducts());
         return orderRepository.save(existingOrder);
     }
 
@@ -66,5 +67,22 @@ public class OrderService {
             throw new EntityNotFoundException("Order not found with id: " + id);
         }
         orderRepository.deleteById(id);
+    }
+
+    // add an orderproduct to the list
+    public Order addOrderProduct(Long id, OrderProduct orderProduct) {
+        Order order = getOrder(id);
+        if (order.getOrderProducts() == null) {
+            order.setOrderProducts(new ArrayList<OrderProduct>());
+        }
+        order.getOrderProducts().add(orderProduct);
+        return orderRepository.save(order);
+    }
+
+    // remove an orderProduct from the list
+    public Order deleteOrderProduct(Long id, Long orderProductId) {
+        Order order = getOrder(id);
+        order.getOrderProducts().removeIf(op -> op.getId().equals(orderProductId));
+        return orderRepository.save(order);
     }
 }

@@ -15,7 +15,7 @@ public class Product {
     private Long id;
 
     @NotBlank(message = "Le nom du produit est obligatoire")
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String name;
 
     @NotNull(message = "Le prix du produit est obligatoire")

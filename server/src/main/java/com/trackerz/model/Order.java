@@ -24,6 +24,6 @@ public class Order {
     @JoinColumn(name = "client_id", nullable = false)
     private Client client;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderProduct> orderProducts;
 }

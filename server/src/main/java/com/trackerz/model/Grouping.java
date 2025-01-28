@@ -33,7 +33,7 @@ public class Grouping {
     @Column(nullable = false)
     private Integer nb_orders;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Order> orders;
 
     @NotNull(message = "Le statut est obligatoire")

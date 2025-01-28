@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.trackerz.service.OrderService;
 import com.trackerz.model.Order;
+import com.trackerz.model.OrderProduct;
 import java.util.List;
 import jakarta.validation.Valid;
 import java.time.LocalDateTime;
@@ -72,6 +73,20 @@ public class OrderController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
+    // Add an orderProduct to the list
+    @PutMapping("update/orderproduct/add/{id}")
+    public ResponseEntity<Order> addOrderProduct(@PathVariable Long id, @Valid @RequestBody OrderProduct orderProduct) {
+        Order updatedOrder = orderService.addOrderProduct(id, orderProduct);
+        return ResponseEntity.status(HttpStatus.OK).body(updatedOrder);
+    }
+
+    // Remove an orderProduct from the list
+    @PutMapping("update/orderproduct/delete/{id}/{orderProductId}")
+    public ResponseEntity<Order> deleteOrderProduct(@PathVariable Long id, @PathVariable Long orderProductId) {
+        Order updatedOrder = orderService.deleteOrderProduct(id, orderProductId);
+        return ResponseEntity.status(HttpStatus.OK).body(updatedOrder);
+    }
+    
 }
 
     

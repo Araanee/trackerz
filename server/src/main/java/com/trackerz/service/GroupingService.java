@@ -5,8 +5,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import jakarta.transaction.Transactional;
 
 import com.trackerz.repository.GroupingRepository;
+import com.trackerz.model.Order;
 import com.trackerz.model.Grouping;
 import com.trackerz.exception.EntityNotFoundException;
+import com.trackerz.exception.ObjectAlreadyExistsException;
+
+import java.util.ArrayList;
 import java.util.List;
 @Service
 @Transactional
@@ -50,7 +54,6 @@ public class GroupingService {
         existingGrouping.setTotal(updatedGrouping.getTotal());
         existingGrouping.setProfitSharing(updatedGrouping.getProfitSharing());
         existingGrouping.setNb_orders(updatedGrouping.getNb_orders());
-        existingGrouping.setOrders(updatedGrouping.getOrders());
         existingGrouping.setStatus(updatedGrouping.getStatus());
         return groupingRepository.save(existingGrouping);
     }
@@ -61,5 +64,31 @@ public class GroupingService {
             throw new EntityNotFoundException("Grouping not found with id: " + id);
         }
         groupingRepository.deleteById(id);
+    }
+
+    // Add an order to the list
+    public Grouping addOrder(Long id, Order order) {
+        Grouping updatedGrouping = getGrouping(id);
+        if (updatedGrouping.getOrders() == null) {
+            updatedGrouping.setOrders(new ArrayList<>());
+        }
+
+        // check that an order with this client does not already exists
+        boolean clientExists = updatedGrouping.getOrders()
+        .stream()
+        .anyMatch(o -> o.getClient().getId().equals(order.getClient().getId()));
+        if (clientExists) {
+            throw new ObjectAlreadyExistsException("Order with client : " +  order.getClient().getName() + " already exists.");
+        }
+
+        updatedGrouping.getOrders().add(order);
+        return groupingRepository.save(updatedGrouping);
+    }
+
+    // Remove an order from the list
+    public Grouping deleteOrder(Long id, Long orderId) {
+        Grouping updatedGrouping = getGrouping(id);
+        updatedGrouping.getOrders().removeIf(o -> o.getId().equals(orderId));
+        return groupingRepository.save(updatedGrouping);
     }
 }

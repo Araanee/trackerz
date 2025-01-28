@@ -15,7 +15,7 @@ public class OrderProduct {
     private Long id;
 
     @NotNull(message = "Le produit est obligatoire")
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 

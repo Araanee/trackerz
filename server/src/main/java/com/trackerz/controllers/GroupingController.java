@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.trackerz.service.GroupingService;
+import com.trackerz.model.Order;
 import com.trackerz.model.Grouping;
 import java.util.List;
 import jakarta.validation.Valid;
@@ -61,5 +62,19 @@ public class GroupingController {
     public ResponseEntity<Void> deleteGrouping(@PathVariable Long id) {
         groupingService.deleteGrouping(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    // Add an order to the list
+    @PutMapping("/update/order/add/{id}")
+    public ResponseEntity<Grouping> addOrder(@PathVariable Long id, @Valid @RequestBody Order order) {
+        Grouping updatedGrouping = groupingService.addOrder(id, order);
+        return ResponseEntity.status(HttpStatus.OK).body(updatedGrouping);
+    }
+
+    // Delete an order from the list
+    @PutMapping("/update/order/delete/{id}/{orderId}")
+    public ResponseEntity<Grouping> deleteOrder(@PathVariable Long id, @PathVariable Long orderId) {
+        Grouping updatedGrouping = groupingService.deleteOrder(id, orderId);
+        return ResponseEntity.status(HttpStatus.OK).body(updatedGrouping);
     }
 }
