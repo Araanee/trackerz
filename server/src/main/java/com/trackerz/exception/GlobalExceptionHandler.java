@@ -53,7 +53,7 @@ public class GlobalExceptionHandler {
             // Check if it is a constraint violation on the product's name
             if (constraintViolation.getConstraintName() != null && 
                 constraintViolation.getMessage().toLowerCase().contains("(name)")) {
-                message = "Product with this name already exists";
+                message = "Object with this name already exists";
             } else {
                 message = "Database constraint violation";
             }
