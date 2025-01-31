@@ -52,6 +52,13 @@ public class OrderProductController {
         return ResponseEntity.status(HttpStatus.OK).body(orderProducts);
     }
 
+    // Get all order product associated with an intermediary
+    @GetMapping("/intermediary/{id}")
+    public ResponseEntity<List<OrderProduct>> getCommandes(@PathVariable Long id) {
+        List<OrderProduct> orderProducts = orderProductService.getOrderProductsByIntermediary(id);
+        return ResponseEntity.status(HttpStatus.OK).body(orderProducts);
+    }
+
     // Create an order product
     @PostMapping("/create")
     public ResponseEntity<OrderProduct> createOrderProduct(@Valid @RequestBody OrderProduct orderProduct) {

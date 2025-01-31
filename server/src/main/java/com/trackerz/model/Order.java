@@ -19,6 +19,8 @@ public class Order {
 
     private Double totalAmount;
 
+    private Double totalCollected;
+
     @NotNull(message = "Le client est obligatoire")
     @ManyToOne
     @JoinColumn(name = "client_id", nullable = false)

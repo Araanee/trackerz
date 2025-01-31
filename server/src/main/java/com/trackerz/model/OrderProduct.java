@@ -1,6 +1,7 @@
 package com.trackerz.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.Data;
@@ -22,6 +23,11 @@ public class OrderProduct {
     @NotNull(message = "La quantité est obligatoire")
     @Positive(message = "La quantité doit être positive")
     private Integer quantity;
+
+    @NotBlank
+    @ManyToOne
+    @JoinColumn(name = "intermediary_id", nullable = false)
+    private Intermediary intermediary;
 
     @NotNull(message = "Le statut est obligatoire")
     @Enumerated(EnumType.STRING)

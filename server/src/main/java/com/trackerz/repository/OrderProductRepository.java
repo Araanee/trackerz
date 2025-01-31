@@ -17,4 +17,7 @@ public interface OrderProductRepository extends JpaRepository<OrderProduct, Long
     
     // Find orderproducts by product name
     List<OrderProduct> findByProduct_NameContainingIgnoreCase(String productName);
+
+    // Find all Order product associated to an intermediary
+    List<OrderProduct> findByIntermediaryId(Long intermediaryId);
 } 

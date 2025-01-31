@@ -26,10 +26,16 @@ public class Grouping {
     @Column(nullable = false)
     private Double total;
 
+    @Column(nullable = false)
+    private Double totalCollected;
+
     @OneToOne
     @JoinColumn(name = "profit_sharing_id", nullable = false)
     private ProfitSharing profitSharing;
     
+    @Column(nullable = false)
+    private Integer nb_orders_collected;
+
     @Column(nullable = false)
     private Integer nb_orders;
 

@@ -44,6 +44,11 @@ public class OrderProductService {
         return orderProductRepository.findByProduct_NameContainingIgnoreCase(productName);
     }
 
+    // Find all order product associated to an intermediary
+    public List<OrderProduct> getOrderProductsByIntermediary(Long intermediaryId) {
+        return orderProductRepository.findByIntermediaryId(intermediaryId);
+    }
+
     // Get all order products
     public List<OrderProduct> getAllOrderProducts() {
         return orderProductRepository.findAll();
