@@ -56,11 +56,6 @@ mvn spring-boot:run
 
 trackerz/
 ├── client/ # React frontend
-│ ├── src/
-│ │ ├── components/ # Reusable components
-│ │ ├── pages/ # Page components
-│ │ ├── services/ # API services
-│ │ └── utils/ # Helper functions
 ├── server/ # Spring Boot backend
 │ ├── src/
 │ │ ├── main/
