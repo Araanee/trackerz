@@ -22,10 +22,10 @@ public class Order {
     private Double totalCollected;
 
     @NotNull(message = "Le client est obligatoire")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "client_id", nullable = false)
     private Client client;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<OrderProduct> orderProducts;
 }

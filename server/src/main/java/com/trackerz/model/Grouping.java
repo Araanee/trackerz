@@ -29,7 +29,7 @@ public class Grouping {
     @Column(nullable = false)
     private Double totalCollected;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "profit_sharing_id", nullable = false)
     private ProfitSharing profitSharing;
     
@@ -39,7 +39,7 @@ public class Grouping {
     @Column(nullable = false)
     private Integer nb_orders;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Order> orders;
 
     @NotNull(message = "Le statut est obligatoire")

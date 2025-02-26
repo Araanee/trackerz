@@ -52,7 +52,9 @@ public class GroupingService {
         existingGrouping.setName(updatedGrouping.getName());
         existingGrouping.setDate(updatedGrouping.getDate());
         existingGrouping.setTotal(updatedGrouping.getTotal());
+        existingGrouping.setTotalCollected(updatedGrouping.getTotalCollected());
         existingGrouping.setProfitSharing(updatedGrouping.getProfitSharing());
+        existingGrouping.setNb_orders_collected(updatedGrouping.getNb_orders_collected());
         existingGrouping.setNb_orders(updatedGrouping.getNb_orders());
         existingGrouping.setStatus(updatedGrouping.getStatus());
         return groupingRepository.save(existingGrouping);
@@ -82,6 +84,7 @@ public class GroupingService {
         }
 
         updatedGrouping.getOrders().add(order);
+        updatedGrouping.setNb_orders(updatedGrouping.getNb_orders() + 1);
         return groupingRepository.save(updatedGrouping);
     }
 
@@ -91,4 +94,5 @@ public class GroupingService {
         updatedGrouping.getOrders().removeIf(o -> o.getId().equals(orderId));
         return groupingRepository.save(updatedGrouping);
     }
+    
 }

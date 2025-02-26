@@ -5,9 +5,11 @@ import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
 
+import com.trackerz.repository.OrderProductRepository;
 import com.trackerz.repository.OrderRepository;
 import com.trackerz.model.Order;
 import com.trackerz.model.OrderProduct;
+import com.trackerz.model.OrderStatus;
 import com.trackerz.exception.EntityNotFoundException;
 import java.util.List;
 import java.util.ArrayList;
@@ -19,11 +21,15 @@ public class OrderService {
     
     // Repository injection
     private final OrderRepository orderRepository;
+    private final OrderProductRepository orderProductRepository;
 
     // Constructor injection
     @Autowired
-    public OrderService(OrderRepository orderRepository) {
+    public OrderService(
+        OrderRepository orderRepository,
+        OrderProductRepository orderProductRepository) {
         this.orderRepository = orderRepository;
+        this.orderProductRepository = orderProductRepository;
     }
 
     // Create an order
@@ -69,20 +75,32 @@ public class OrderService {
         orderRepository.deleteById(id);
     }
 
-    // add an orderproduct to the list
+    // add an order product to the list
     public Order addOrderProduct(Long id, OrderProduct orderProduct) {
         Order order = getOrder(id);
         if (order.getOrderProducts() == null) {
             order.setOrderProducts(new ArrayList<OrderProduct>());
         }
+
+        
+
         order.getOrderProducts().add(orderProduct);
+        order.setTotalAmount(order.getTotalAmount() + orderProduct.getProduct().getPrice());
         return orderRepository.save(order);
     }
 
     // remove an orderProduct from the list
     public Order deleteOrderProduct(Long id, Long orderProductId) {
         Order order = getOrder(id);
-        order.getOrderProducts().removeIf(op -> op.getId().equals(orderProductId));
+        boolean isInTheList = order.getOrderProducts().removeIf(op -> op.getId().equals(orderProductId));
+        // Substract the price from the total amount of the order
+        if (isInTheList) {
+            OrderProduct orderProduct = orderProductRepository.getReferenceById(orderProductId);
+            order.setTotalAmount(order.getTotalAmount() - orderProduct.getProduct().getPrice());
+            if (orderProduct.getStatus() == OrderStatus.COLLECTED) {
+                order.setTotalCollected(order.getTotalCollected() - orderProduct.getProduct().getPrice());
+            }
+        }
         return orderRepository.save(order);
     }
 }

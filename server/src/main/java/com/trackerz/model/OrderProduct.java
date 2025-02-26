@@ -1,7 +1,6 @@
 package com.trackerz.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.Data;
@@ -16,7 +15,7 @@ public class OrderProduct {
     private Long id;
 
     @NotNull(message = "Le produit est obligatoire")
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
@@ -24,8 +23,8 @@ public class OrderProduct {
     @Positive(message = "La quantité doit être positive")
     private Integer quantity;
 
-    @NotBlank
-    @ManyToOne
+    @NotNull
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "intermediary_id", nullable = false)
     private Intermediary intermediary;
 
